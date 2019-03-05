@@ -1,0 +1,35 @@
+.open-search {
+	position: fixed;
+	right: 25px;
+	bottom: 25px;
+}
+
+.open-search button {
+	background: #2e7d32 url('../../icons/add.svg') center center no-repeat;
+	background-size: 28px;
+	border-radius: 50%;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	display: block;
+	font-size: 0;
+	height: 50px;
+	outline: 0;
+	width: 50px;
+}
+
+.open-search button:hover { background-color: #006600; }
+
+.search-terms {
+	font-family: monospace;
+	font-size: 12px;
+	margin-top: 2em;
+	padding: 1em 0;
+	text-align: center;
+	white-space: pre-wrap;
+}
+
+.search-terms span {
+	background-color: #ccc;
+	display: inline-block;
+	margin: .3em;
+	padding: .1em .5em;
+}
