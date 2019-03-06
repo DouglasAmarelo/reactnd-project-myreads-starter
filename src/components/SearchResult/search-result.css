@@ -29,6 +29,7 @@
 
 .search-terms span {
 	background-color: #ccc;
+	cursor: pointer;
 	display: inline-block;
 	margin: .3em;
 	padding: .1em .5em;

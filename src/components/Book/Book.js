@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import './book.css';
+import imageNotFound from '../../images/no-image.jpg';
 
 class Book extends Component {
 	render() {
 		const { title, authors, imageLinks } = this.props.book;
 		const { onMoveBook } = this.props;
-		const coverBook = imageLinks.thumbnail;
+		const coverBook = imageLinks ? imageLinks.thumbnail || imageLinks.smallThumbnail : imageNotFound;
 
-		console.log('Book', this.props);
+		console.log('Book', JSON.stringify(this.props));
 
 		return (
 			<li className="books-grid__item">
@@ -15,8 +16,8 @@ class Book extends Component {
 					<div
 						className="book-cover"
 						style={{
-							background: `url(${coverBook}) top left no-repeat`,
-							backgroundSize: '100%',
+							background: `#ebebeb url(${coverBook}) top center no-repeat`,
+							backgroundSize: 'cover',
 						}}
 					></div>
 					<div className="book-title">{title}</div>
