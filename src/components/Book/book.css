@@ -54,13 +54,21 @@
 .book-cover {
 	display: block;
 	height: 235px;
-	width: 175px;
+	max-width: 175px;
+	width: 100%;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1070px) {
 	.book-cover {
 		height: 185px;
-		width: 160px;
+		max-width: 160px;
+	}
+}
+
+@media (max-width: 360px) {
+	.book-cover {
+		height: 305px;
+		max-width:100%;
 	}
 }
 

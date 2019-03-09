@@ -6,7 +6,6 @@ import BookShelf from '../../components/BookShelf/BookShelf';
 class Home extends Component {
 	render() {
 		const { shelfs, books } = this.props;
-		console.log('Home', this.props);
 
 		return (
 			<div className="page page-home">
@@ -20,6 +19,7 @@ class Home extends Component {
 								key={shelf.title}
 								title={shelf.title}
 								onMoveBook={this.props.onMoveBook}
+								shelfs={shelfs}
 								books={books.filter((book) => book.shelf === shelf.id)}
 							/>
 						))
