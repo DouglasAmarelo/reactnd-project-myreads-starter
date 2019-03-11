@@ -13,18 +13,15 @@ class Home extends Component {
 
 				<div className="list-books">
 					<div className="list-books-content">
-					{
-					  shelfs.filter(shelf => shelf.id !== 'researchedbooks')
-							.map(shelf => (
-								<BookShelf
-									key={shelf.title}
-									title={shelf.title}
-									onMoveBook={this.props.onMoveBook}
-									shelfs={shelfs}
-									books={books.filter((book) => book.shelf === shelf.id)}
-								/>
-							))
-					}
+					{shelfs.filter(shelf => shelf.id !== 'researchedbooks').map(shelf => (
+						<BookShelf
+							key={shelf.title}
+							title={shelf.title}
+							onMoveBook={this.props.onMoveBook}
+							shelfs={shelfs}
+							books={books.filter(book => book.shelf === shelf.id)}
+						/>
+					))}
 					</div>
 
 					<Link
@@ -35,8 +32,8 @@ class Home extends Component {
 					</Link>
 				</div>
 			</div>
-		)
-	}
-}
+		);
+	};
+};
 
 export default Home;

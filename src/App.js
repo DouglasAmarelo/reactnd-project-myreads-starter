@@ -6,54 +6,50 @@ import Search from './pages/Search/Search';
 
 class BooksApp extends Component {
 	state = {
-		shelfs: [{
-			id: 'currentlyReading',
-			title: 'Currently Reading'
-		},
-		{
-			id: 'wantToRead',
-			title: 'Want to read'
-		},
-		{
-			id: 'read',
-			title: 'Read'
-		}],
+		shelfs: [
+			{ id: 'currentlyReading', title: 'Currently Reading' },
+			{ id: 'wantToRead', title: 'Want to read' },
+			{ id: 'read', title: 'Read' }
+		],
 		books: [],
 		researchedBooks: [],
 		searchTerm: ''
-	}
+	};
 
 	componentDidMount() {
 		BooksAPI.getAll().then(books => {
-			this.setState({ books })
+			this.setState({ books });
 		});
-	}
+	};
 
 	moveBook = (book, shelf) => {
-		this.setState(state => ({
-			books: state.books.filter(currentBook => {
-				if (currentBook.id === book.id && currentBook.shelf !== shelf) {
-					currentBook.shelf = shelf;
-				}
+		const filterCurrentBook = currentBook => {
+			if (currentBook.id === book.id && currentBook.shelf !== shelf) {
+				currentBook.shelf = shelf;
+			}
 
-				return currentBook;
-			})
-		}));
+			return currentBook;
+		};
 
-		this.setState(state => ({
-			researchedBooks: state.researchedBooks.filter(currentBook => {
-				if (currentBook.id === book.id && currentBook.shelf !== shelf) {
-					currentBook.shelf = shelf;
-				}
+		this.setState(state => {
+			const hasBookInState = state.books.some(currentBook => currentBook.id === book.id);
 
-				return currentBook;
-			})
-		}));
+			if (!hasBookInState) {
+				book.shelf = shelf;
+				const books = state.books.concat(book);
+				return { books };
+			} else {
+				const books = state.books.filter(filterCurrentBook);
+				return { books };
+			}
+		});
+
+		this.setState(state => ({ researchedBooks: state.researchedBooks.filter(filterCurrentBook) }));
 
 		BooksAPI.update(book, shelf);
-	}
+	};
 
-	searchBook = (query) => {
+	searchBook = query => {
 		if (!query || query === '') {
 			this.setState({ researchedBooks: [] });
 			return;
@@ -71,14 +67,13 @@ class BooksApp extends Component {
 				this.setState({ researchedBooks: res });
 				this.identifyUserBooks();
 			});
-
 		}, 300);
-	}
+	};
 
 	identifyUserBooks = () => {
 		this.setState(state => ({
 			researchedBooks: state.researchedBooks.map(book => {
-				let userBook = this.state.books.find(uBook => uBook.id === book.id);
+				const userBook = state.books.find(uBook => uBook.id === book.id);
 
 				if (userBook) {
 					book.shelf = userBook.shelf;
@@ -114,8 +109,8 @@ class BooksApp extends Component {
 					/>
 				)} />
 			</div>
-		)
-	}
-}
+		);
+	};
+};
 
 export default BooksApp

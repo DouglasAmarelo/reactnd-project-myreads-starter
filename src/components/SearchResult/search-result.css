@@ -1,7 +1,8 @@
+/* Search result */
 .open-search {
+	bottom: 25px;
 	position: fixed;
 	right: 25px;
-	bottom: 25px;
 }
 
 .open-search button {
@@ -16,7 +17,7 @@
 	width: 50px;
 }
 
-.open-search button:hover { background-color: #006600; }
+.open-search button:hover { background-color: #060; }
 
 .search-terms {
 	font-family: monospace;
