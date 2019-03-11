@@ -4,8 +4,7 @@ import './search-form.css';
 
 class SearchForm extends Component {
 	render() {
-		const { onSearchBook } = this.props;
-		console.log('Search-form', this.props);
+		const { onSearchBook, searchTerm } = this.props;
 
 		return (
 			<div className="search-books">
@@ -28,9 +27,10 @@ class SearchForm extends Component {
 						*/}
 
 						<input
+							defaultValue={searchTerm}
 							type="text"
 							placeholder="Search by title or author"
-							onInput={(e) => onSearchBook(e.target.value)}
+							onChange={(e) => onSearchBook(e.target.value)}
 						/>
 					</div>
 				</div>

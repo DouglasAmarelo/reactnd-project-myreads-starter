@@ -18,7 +18,13 @@ class Book extends Component {
 							background: `#ebebeb url(${coverBook}) top center no-repeat`,
 							backgroundSize: 'cover',
 						}}
-					></div>
+					>
+						{
+							shelf !== 'researchedBooks' && (
+								<div className="book-in-user-list"></div>
+							)
+						}
+					</div>
 					<div className="book-title">{title}</div>
 					<div className="book-authors">{authors}</div>
 

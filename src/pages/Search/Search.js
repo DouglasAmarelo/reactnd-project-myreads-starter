@@ -5,22 +5,24 @@ import SearchResult from '../../components/SearchResult/SearchResult';
 
 class Search extends Component {
 	render() {
-		const { researchedBooks } = this.props;
-		console.log('Search', this.props);
+		const { shelfs, researchedBooks, onSearchBook, searchTerm } = this.props;
 
 		return (
 			<div className="page page-search">
 				<Header title="Search a book" />
 
 				<SearchForm
-					onSearchBook={this.props.onSearchBook}
+					searchTerm={searchTerm}
+					onSearchBook={onSearchBook}
 				/>
 
 				<div className="list-books">
 					<div className="list-books-content">
 						<SearchResult
+							shelfs={shelfs}
 							researchedBooks={researchedBooks}
 							onMoveBook={this.props.onMoveBook}
+							onSearchBook={onSearchBook}
 						/>
 					</div>
 				</div>

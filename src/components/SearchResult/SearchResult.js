@@ -9,8 +9,7 @@ class SearchResult extends Component {
 		]
 	}
 	render() {
-		const { researchedBooks } = this.props;
-		console.log('Search result', this.props);
+		const { shelfs, researchedBooks, onSearchBook } = this.props;
 
 		return (
 			<div>
@@ -19,7 +18,7 @@ class SearchResult extends Component {
 						this.state.searchTerms.map(term => (
 							<span
 								key={term}
-								onClick={(e) => console.log(e.target.textContent)}
+								onClick={(e) => onSearchBook(e.target.textContent)}
 							>
 								{term}
 							</span>
@@ -28,6 +27,7 @@ class SearchResult extends Component {
 				</div>
 
 				<BookShelf
+					shelfs={shelfs}
 					books={researchedBooks}
 					onMoveBook={this.props.onMoveBook}
 				/>

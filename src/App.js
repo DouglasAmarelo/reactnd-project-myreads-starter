@@ -3,7 +3,6 @@ import { Route } from 'react-router-dom';
 import * as BooksAPI from './utils/BooksAPI';
 import Home from './pages/Home/Home';
 import Search from './pages/Search/Search';
-import './App.css';
 
 class BooksApp extends Component {
 	state = {
@@ -20,7 +19,8 @@ class BooksApp extends Component {
 			title: 'Read'
 		}],
 		books: [],
-		researchedBooks: []
+		researchedBooks: [],
+		searchTerm: ''
 	}
 
 	componentDidMount() {
@@ -31,7 +31,17 @@ class BooksApp extends Component {
 
 	moveBook = (book, shelf) => {
 		this.setState(state => ({
-			contacts: state.books.filter(currentBook => {
+			books: state.books.filter(currentBook => {
+				if (currentBook.id === book.id && currentBook.shelf !== shelf) {
+					currentBook.shelf = shelf;
+				}
+
+				return currentBook;
+			})
+		}));
+
+		this.setState(state => ({
+			researchedBooks: state.researchedBooks.filter(currentBook => {
 				if (currentBook.id === book.id && currentBook.shelf !== shelf) {
 					currentBook.shelf = shelf;
 				}
@@ -44,19 +54,45 @@ class BooksApp extends Component {
 	}
 
 	searchBook = (query) => {
-		if (query !== '') {
-			setTimeout(() => {
-				BooksAPI.search(query).then(res => {
-					this.setState({ researchedBooks: res});
-				});
-			}, 200);
-		} else {
-			this.setState({ researchedBooks: []});
+		if (!query || query === '') {
+			this.setState({ researchedBooks: [] });
+			return;
 		}
+
+		this.setState({ searchTerm: query });
+
+		setTimeout(() => {
+			BooksAPI.search(query.trim()).then(res => {
+				if (res.error) {
+					this.setState({ researchedBooks: [] });
+					return;
+				}
+
+				this.setState({ researchedBooks: res });
+				this.identifyUserBooks();
+			});
+
+		}, 300);
 	}
 
+	identifyUserBooks = () => {
+		this.setState(state => ({
+			researchedBooks: state.researchedBooks.map(book => {
+				let userBook = this.state.books.find(uBook => uBook.id === book.id);
+
+				if (userBook) {
+					book.shelf = userBook.shelf;
+				} else {
+					book.shelf = 'researchedBooks';
+				}
+
+				return book;
+			})
+		}));
+	};
+
 	render() {
-		const { shelfs, books, researchedBooks } = this.state;
+		const { shelfs, books, researchedBooks, searchTerm } = this.state;
 
 		return (
 			<div className="app">
@@ -71,6 +107,7 @@ class BooksApp extends Component {
 				<Route path="/search" render={() => (
 					<Search
 						shelfs={shelfs}
+						searchTerm={searchTerm}
 						researchedBooks={researchedBooks}
 						onSearchBook={this.searchBook}
 						onMoveBook={this.moveBook}

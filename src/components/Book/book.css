@@ -55,6 +55,7 @@
 	display: block;
 	height: 235px;
 	max-width: 175px;
+	position: relative;
 	width: 100%;
 }
 
@@ -76,4 +77,17 @@
 	font-size: 0.8em;
 	padding: 20px 10px 0;
 	text-align: center;
+}
+
+/* Book in User list */
+.page-search .book-in-user-list {
+	background: url('../../images/check-icon.jpg') center center no-repeat;
+	background-size: 30px;
+	border-radius: 50%;
+	height: 30px;
+	width: 30px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	transform: translate(50%, -50%);
 }
